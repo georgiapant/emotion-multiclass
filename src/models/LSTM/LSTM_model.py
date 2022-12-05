@@ -3,7 +3,6 @@ from tensorflow.keras.layers import Embedding, Bidirectional, LSTM, Dense, Dropo
 
 
 def lstm(vocab_size, embedding_matrix, EMBED_NUM_DIMS, MAX_SEQ_LEN, num_labels):
-    gru_output_size = 128
     bidirectional = True
 
     embedding_layer = Embedding(vocab_size, EMBED_NUM_DIMS, input_length=MAX_SEQ_LEN, weights=[embedding_matrix],
@@ -14,10 +13,8 @@ def lstm(vocab_size, embedding_matrix, EMBED_NUM_DIMS, MAX_SEQ_LEN, num_labels):
     model.add(embedding_layer)
 
     if bidirectional:
-        # model.add(Bidirectional(GRU(units=gru_output_size, dropout=0.2, recurrent_dropout=0.2)))
         model.add(Bidirectional(LSTM(64, return_sequences=False)))
     else:
-        # model.add(GRU(units=gru_output_size, dropout=0.2, recurrent_dropout=0.2))
         model.add((LSTM(64, return_sequences=False)))
 
     model.add(Dropout(0.2))

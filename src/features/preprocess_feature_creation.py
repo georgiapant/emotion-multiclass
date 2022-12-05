@@ -19,6 +19,7 @@ from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
+
 def fix_encoding(text):
     text = re.sub("[\x8b]", ' ', text)
     text = re.sub("[\xc2-\xf4][\x80-\xbf]+", lambda m: m.group(0).encode('latin1').decode('utf8'), text)
@@ -28,7 +29,7 @@ def fix_encoding(text):
 
 
 def text_preprocessing(text):
-    text = re.sub("[\xc2-\xf4][\x80-\xbf]+", lambda m: m.group(0).encode('latin1').decode('utf8'), text)
+    # text = re.sub("[\xc2-\xf4][\x80-\xbf]+", lambda m: m.group(0).encode('latin1').decode('utf8'), text)
     text = convert_to_unicode(text.rstrip().lower())
     text = run_strip_accents(text)
     # Remove '@name'
@@ -222,7 +223,6 @@ def create_dataloaders_BERT(X, y, tokenizer, MAX_LEN, BATCH_SIZE, sampler='seque
 
 def create_embedding_matrix(X_train, X_dev, model, embed_type='w2v_wiki', MAX_SEQ_LEN=100,
                             EMBED_NUM_DIMS=300, project_root_path=None):
-
     texts_train = [''.join(text_preprocessing(text)) for text in X_train]
     texts_dev = [''.join(text_preprocessing(text)) for text in X_dev]
 
@@ -244,7 +244,7 @@ def create_embedding_matrix(X_train, X_dev, model, embed_type='w2v_wiki', MAX_SE
     # get embeddings from file
     try:
         if embed_type == 'w2v_wiki':
-            fpath = 'embeddings/wiki-news-300d-1M.vec'
+            fpath = project_root_path + '/data/resources/wiki-news-300d-1M.vec'
 
             if not os.path.isfile(fpath):
                 print('Downloading word vectors...')
@@ -252,18 +252,17 @@ def create_embedding_matrix(X_train, X_dev, model, embed_type='w2v_wiki', MAX_SE
                     'https://dl.fbaipublicfiles.com/fasttext/vectors-english/wiki-news-300d-1M.vec.zip',
                     project_root_path + '/data/resources/wiki-news-300d-1M.vec.zip')
                 print('Unzipping...')
-                with zipfile.ZipFile('wiki-news-300d-1M.vec.zip', 'r') as zip_ref:
-                    zip_ref.extractall('embeddings')
+                with zipfile.ZipFile(project_root_path + '/data/resources/wiki-news-300d-1M.vec.zip', 'r') as zip_ref:
+                    zip_ref.extractall(project_root_path + '/data/resources')
                 print('done.')
 
-                # os.remove('wiki-news-300d-1M.vec.zip')
+                os.remove(project_root_path + '/data/resources/wiki-news-300d-1M.vec.zip')
 
         elif embed_type == 'w2v':
             fpath = project_root_path + "/data/resources/embedding_word2vec.txt"
 
         elif embed_type == 'glove':
             fpath = project_root_path + "/data/resources/glove.6B." + str(EMBED_NUM_DIMS) + "d.txt"
-            # pd.read_csv(r"C:\Users\georgiapant\PycharmProjects\REBECCA\Resources\glove.6B\glove.6B.100d.txt")
 
     except Exception as e:
         print(e)
@@ -300,8 +299,10 @@ def create_embedding_matrix(X_train, X_dev, model, embed_type='w2v_wiki', MAX_SE
     return X_train_pad, X_dev_pad, vocab_size, embedding_matrix
 
 
-def tokenize(text):
-    data = word_tokenize(text)
+def preprocess_and_tokenize(data):
+    data = text_preprocessing(data)
+    # tokenization with nltk
+    data = word_tokenize(data)
 
     # stemming with nltk
     porter = PorterStemmer()
@@ -310,15 +311,15 @@ def tokenize(text):
     return stem_data
 
 
-def tf_idf(X_train, X_test, analyzer='word', ngrma_range=(1,2)):
+def tf_idf(X_train, X_test, analyzer='word', ngram_range=(1, 2)):
     # TFIDF, unigrams and bigrams
-    vect = TfidfVectorizer(tokenizer=tokenize, sublinear_tf=True, norm='l2', analyzer=analyzer, ngram_range=ngrma_range)
+    vect = TfidfVectorizer(tokenizer=preprocess_and_tokenize, sublinear_tf=True, norm='l2', analyzer=analyzer, ngram_range=ngram_range)
 
     # fit on our complete corpus
-    vect.fit_transform(X_train)
+    vect.fit(X_train)
 
     # transform testing and training datasets to vectors
-    X_train_vect = vect.fit_transform(X_train)
+    X_train_vect = vect.transform(X_train)
     X_test_vect = vect.transform(X_test)
 
     return X_train_vect, X_test_vect, vect

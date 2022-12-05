@@ -10,7 +10,7 @@ from src.models.Traditional.Traditional_train_eval import ML
 
 # from src.models.BERT_MLM.BERT_MLM_train_eval import BertMLM
 
-MODELS = {"BERT": BertSimple, "BERT_bilstm": BertBilstm, "BERT_gru_caps": BERTGruCaps,
+MODELS = {"BERT": BertSimple, "BERT_bilstm": BertBilstm, "BERT_bilstm_simple": BertBilstm, "BERT_gru_caps": BERTGruCaps,
           "BERT_vad_nrc": BertVadNrc, "CNN": CNN, "LSTM": LSTM, "LR": ML, "NB": ML, "SVC": ML, "RF": ML}
 
 parser = argparse.ArgumentParser()
@@ -19,9 +19,9 @@ parser.add_argument('--dataset', type=str, default='ekman') #other options
 parser.add_argument('--max_len', type=int, default=126)
 parser.add_argument('--batch_size', type=int, default=16)
 parser.add_argument('--epochs', type=int, default=10)
+parser.add_argument('--es', type=str, default='val_loss')
 parser.add_argument('--patience', type=int, default=3)
 parser.add_argument('--random_seed', type=int, default=42)
-parser.add_argument('--es', type=str, default='val_loss')
 parser.add_argument('--embed_type', type=str, default='w2v_wiki') # other options - 'glove' and 'w2v'
 parser.add_argument('--analyzer', type=str, default='word') # other options 'char'
 parser.add_argument('--ngram_range', type=tuple, default=(1, 2))

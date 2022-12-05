@@ -8,6 +8,7 @@ from src.features.preprocess_feature_creation import create_dataloaders_BERT
 from src.helpers import set_seed
 from src.data.create_dataset import GetData
 from src.models.BERT_BiLSTM import BERT_bilstm
+from src.models.BERT_BiLSTM import BERT_bilstm_simple
 from src.evaluate import evaluate
 from src.train import train, predict
 
@@ -49,13 +50,16 @@ class BertBilstm:
 
         self.num_labels = len(self.labels)
 
-    def initialize_model(self, train_dataloader, epochs, num_labels, BERT_MODEL):
+    def initialize_model(self, train_dataloader, epochs, num_labels, BERT_MODEL, simple=None):
         """
         Initialize the Bert Classifier, the optimizer and the learning rate scheduler.
         """
         # Instantiate Bert Classifier
         # classifier = model() #freeze_bert=False)
-        classifier = BERT_bilstm.BertClassifier(num_labels, BERT_MODEL, freeze_bert=False)
+        if simple == "BERT_bilstm_simple":
+            classifier = BERT_bilstm_simple.BertClassifier(num_labels, BERT_MODEL, freeze_bert=False)
+        else:
+            classifier = BERT_bilstm.BertClassifier(num_labels, BERT_MODEL, freeze_bert=False)
 
         # Tell PyTorch to run the model on GPU
         classifier.to(self.device)
@@ -88,7 +92,8 @@ class BertBilstm:
         bert_classifier, optimizer, scheduler = self.initialize_model(train_dataloader,
                                                                       epochs=self.EPOCHS,
                                                                       num_labels=self.num_labels,
-                                                                      BERT_MODEL=self.BERT_MODEL)
+                                                                      BERT_MODEL=self.BERT_MODEL,
+                                                                      simple=model_name)
 
         train(bert_classifier, train_dataloader, self.EPOCHS, self.es, self.patience, self.project_root_path,
               self.device, self.loss_fn, val_dataloader, optimizer, scheduler, evaluation=True)

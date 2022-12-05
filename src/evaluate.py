@@ -15,12 +15,15 @@ def monitor_metrics(logits, labels_true):
     return accuracy, fscore_macro
 
 
-def evaluate(probs, y_true):
-    y_pred = []
+def evaluate(probs, y_true, use_preds=False):
+    if use_preds:
+        y_pred = probs
+    else:
+        y_pred = []
 
-    for i in range(len(probs)):
-        pred = np.where(probs[i] == np.amax(probs[i]))[0][0]
-        y_pred.append(pred)
+        for i in range(len(probs)):
+            pred = np.where(probs[i] == np.amax(probs[i]))[0][0]
+            y_pred.append(pred)
 
     accuracy = accuracy_score(y_true, y_pred)
     print(f'Accuracy: {accuracy * 100:.2f}%', flush=True)

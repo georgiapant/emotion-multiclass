@@ -3,8 +3,6 @@ from collections import Counter
 import json
 from sklearn.model_selection import train_test_split
 import numpy as np
-from sklearn.utils import compute_class_weight
-# from src.config import data_path, project_root_path
 from src.features.translate import oversample_with_back_translation
 
 
@@ -82,7 +80,7 @@ class GetData:
     #
     #     return X_train, y_train,  X_val, y_val, X_test, y_test
 
-    def ekman(self, oversampling=False):
+    def ekman(self, split_in=3, oversampling=False):
         # Load data and set labels
         data = pd.read_csv(self.project_root_path + "/data/external/ekman_emotions.csv", encoding="utf8",
                            low_memory=False)
@@ -127,6 +125,8 @@ class GetData:
             y_val = val['label'].values.tolist()
             X_test = test['content'].values
             y_test = test['label'].values.tolist()
+            return X_train, y_train, X_val, y_val, X_test, y_test, emotions
+
         else:
 
             X = data['content'].values
@@ -135,15 +135,16 @@ class GetData:
             # load train, test and validation data]
             X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=self.RANDOM_SEED,
                                                                 stratify=y)
-            X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, test_size=0.5, random_state=self.RANDOM_SEED,
+            if split_in == 3:
+                X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, test_size=0.5, random_state=self.RANDOM_SEED,
                                                             stratify=y_test)
+                return X_train, y_train, X_val, y_val, X_test, y_test, emotions  # , weights
+            elif split_in == 2:
+                return X_train,y_train ,X_test, y_test, emotions
+            else:
+                return "No possible split"
 
-        # weights = compute_class_weight('balanced', np.unique(y_train), y_train)
-        # print(f'The weights of the classes are:\n {weights}')
-
-        return X_train, y_train, X_val, y_val, X_test, y_test, emotions #, weights
-
-    def merged(self):
+    def merged(self, split_in=3):
         # Load data and set labels
         data = pd.read_csv(
             self.project_root_path + "data/external/emotions_merged.csv",
@@ -175,13 +176,19 @@ class GetData:
 
         # load train, test and validation data]
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=self.RANDOM_SEED, stratify=y)
-        X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, test_size=0.5, random_state=self.RANDOM_SEED,
-                                                        stratify=y_test)
 
-        return X_train, y_train, X_val, y_val, X_test, y_test, emotions
+        if split_in == 3:
+            X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, test_size=0.5, random_state=self.RANDOM_SEED,
+                                                            stratify=y_test)
+
+            return X_train, y_train, X_val, y_val, X_test, y_test, emotions
+        elif split_in == 2:
+            return X_train, y_train, X_test, y_test, emotions
+        else:
+            return "No possible split"
 
 
-    def isear(self):
+    def isear(self, split_in=3):
         # Load data and set labels
 
         data = pd.read_csv(
@@ -214,10 +221,15 @@ class GetData:
 
         # load train, test and validation data
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4, random_state=self.RANDOM_SEED, stratify=y)
-        X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, test_size=0.5, random_state=self.RANDOM_SEED,
-                                                        stratify=y_test)
+        if split_in == 3:
+            X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, test_size=0.5, random_state=self.RANDOM_SEED,
+                                                            stratify=y_test)
 
-        return X_train, y_train, X_val, y_val, X_test, y_test, emotions
+            return X_train, y_train, X_val, y_val, X_test, y_test, emotions
+        elif split_in == 2:
+            return X_train,y_train ,X_test, y_test, emotions
+        else:
+            return "No possible split"
 
 
     # def goemotions_with_weights_dataset(emotions):

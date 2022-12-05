@@ -17,14 +17,14 @@ class ML:
         create_dataset = GetData(self.project_root_path, self.RANDOM_SEED)
 
         if dataset == 'ekman':
-            self.X_train, self.y_train, self.X_val, self.y_val, self.X_test, self.y_test, self.labels \
-                = create_dataset.ekman()
+            self.X_train, self.y_train, self.X_test, self.y_test, self.labels \
+                = create_dataset.ekman(split_in=2)
         elif dataset == 'isear':
-            self.X_train, self.y_train, self.X_val, self.y_val, self.X_test, self.y_test, self.labels \
-                = create_dataset.isear()
+            self.X_train, self.y_train, self.X_test, self.y_test, self.labels \
+                = create_dataset.isear(split_in=2)
         elif dataset == 'merged':
-            self.X_train, self.y_train, self.X_val, self.y_val, self.X_test, self.y_test, self.labels \
-                = create_dataset.merged()
+            self.X_train, self.y_train, self.X_test, self.y_test, self.labels \
+                = create_dataset.merged(split_in=2)
         else:
             print("No dataset with the name {}".format(dataset))
 
@@ -46,7 +46,7 @@ class ML:
             model = None
 
         predictions = model.predict(X_test_vect)
-        evaluate(predictions, self.y_test)
+        evaluate(predictions, self.y_test, use_preds=True)
 
         # Save model
         save_model = Pipeline([('tfidf', vect), ('clf', model)])
