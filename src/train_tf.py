@@ -12,7 +12,7 @@ import os
 # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
-def predict(X_test, y_test, model_name, project_root_path, MAX_LEN):
+def predict(X_test, y_test, labels, model_name, project_root_path, MAX_LEN):
     # load tokenizer
     with open(project_root_path + '/models/' + model_name + '_tokenizer', 'rb') as handle:
         tok = pickle.load(handle)
@@ -32,7 +32,7 @@ def predict(X_test, y_test, model_name, project_root_path, MAX_LEN):
 
     # predictions = np.argmax(probabilities, axis=1)
     # evaluate(y_test, predictions)
-    evaluate(probabilities, y_test)
+    evaluate(probabilities, y_test, labels=labels)
 
 
 def train(X_train, y_train, X_dev, y_dev, model_name, es, patience, EPOCHS, BATCH_SIZE, EMBED_NUM_DIMS, MAX_SEQ_LEN,

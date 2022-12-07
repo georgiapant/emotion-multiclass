@@ -27,7 +27,7 @@ class BertVadNrc:
 
         self.loss_fn = nn.CrossEntropyLoss()
         self.tokenizer = BertTokenizer.from_pretrained(BERT_MODEL, do_lower_case=True)
-        self.tokenizer.save_pretrained(project_root_path + "/models/tokenizer_simple/")
+        self.tokenizer.save_pretrained(project_root_path + "/models/tokenizer/")
 
         self.es = es
         self.EPOCHS = EPOCHS
@@ -107,15 +107,15 @@ class BertVadNrc:
 
         print("Validation set", flush=True)
         probs_val = predict(self.X_val, self.MAX_LEN, self.BATCH_SIZE, self.device, vad_nrc=True,
-                            model_path=self.project_root_path + '/models/', model_name=model_name + '.pt',
+                            model_path=self.project_root_path + '/models/', model_name=model_name,
                             project_root_path=self.project_root_path)
-        evaluate(probs_val, self.y_val)
+        evaluate(probs_val, self.y_val, labels=self.labels)
 
         print("Test set", flush=True)
         probs_test = predict(self.X_test, self.MAX_LEN, self.BATCH_SIZE, self.device, vad_nrc=True,
-                             model_path=self.project_root_path + '/models/', model_name=model_name + '.pt',
+                             model_path=self.project_root_path + '/models/',model_name=model_name,
                              project_root_path=self.project_root_path)
 
-        evaluate(probs_test, self.y_test)
+        evaluate(probs_test, self.y_test, labels=self.labels)
 
         print(f"Total training and prediction time: {format_time(time.time() - t0)}", flush=True)

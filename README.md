@@ -20,16 +20,8 @@ These datasets were processed and merged to create the ones used in the experime
 | Argument | Datasets used by ID | Changes |
 | ----------- | ----------- | ----------- | 
 | isear | 1 | None |
-| ekman  | <ul><li>`2`</li><li>`3`</li><li>`4`</li></ul> | <ul><li>Renamed: {"love":"joy", "joy":"joy","fear":"fear","anger":"anger","sadness":"sadness","surprise":"surprise"} and kept instances with only one label</li><li> renamed: "pessimism":"fear", "anticipation":"joy", "optimism":"joy", "trust":"joy"</li><li> removed neutral and merged {"annoyance":"anger", "disapproval":"anger", "anger":"anger", "disgust":"disgust", "joy":"joy","amusement":"joy",<br /> "approval":"joy", "excitement":"joy", "gratitude":"joy",  "love":"joy", "optimism":"joy", "relief":"joy", "pride":"joy", "admiration":"joy", "desire":"joy", <br />"caring":"joy", "sadness":"sadness", "disappointment":"sadness", "embarrassment":"sadness", "grief":"sadness",  "remorse":"sadness",<br /> "surprise":"surprise", "realization":"surprise", "confusion":"surprise", "curiosity":"surprise", "fear":"fear", "nervousness":"fear"} <br />and kept instances with only one label</li></ul> | | 
+| ekman  | <ul><li>`2`</li><li>`3`</li><li>`4`</li></ul> | <ul><li>Renamed: {"love":"joy", "joy":"joy", "fear":"fear", "anger":"anger", "sadness":"sadness", <br />"surprise":"surprise"} and kept instances with only one label</li> <li> renamed: "pessimism":"fear", "anticipation":"joy", "optimism":"joy", "trust":"joy"</li> <li> removed neutral and merged {"annoyance":"anger", "disapproval":"anger", "anger":"anger",<br /> "disgust":"disgust", "joy":"joy","amusement":"joy", "approval":"joy", "excitement":"joy",<br />"gratitude":"joy",  "love":"joy", "optimism":"joy", "relief":"joy", "pride":"joy", "admiration":"joy",<br />"desire":"joy", "caring":"joy", "sadness":"sadness", "disappointment":"sadness", <br /> "embarrassment":"sadness", "grief":"sadness",  "remorse":"sadness", "surprise":"surprise", <br /> "realization":"surprise", "confusion":"surprise", "curiosity":"surprise", "fear":"fear", "nervousness":"fear"} <br /> and kept instances with only one label</li></ul> | | 
 | merged   | <ul><li>`1`</li><li>`2`</li><li>`3`</li></ul> | <ul><li>Kept only the instances with these classes</li><li>Renamed fear to worry and joy to happiness</li><li>Renamed fear to worry and joy to happiness, dropped all the other classes. <br />If an instance had more than one sentiment associated with it, it was also dropped</li></ul> |
-
-
-
-
-- 
-- 
-- For the initial experiments the dataset used was the [xx](). All train, validation, test sets can be found in the folder data
-- For the generalization tests the dataset used was the [xx]() dataset
 
 ### Architectures
 Several different architectures were experimented with. Use the `--model` argument with the following options to experiment with them:

@@ -8,8 +8,6 @@ from src.models.CNN.CNN_train_eval import CNN
 from src.models.LSTM.LSTM_train_eval import LSTM
 from src.models.Traditional.Traditional_train_eval import ML
 
-# from src.models.BERT_MLM.BERT_MLM_train_eval import BertMLM
-
 MODELS = {"BERT": BertSimple, "BERT_bilstm": BertBilstm, "BERT_bilstm_simple": BertBilstm, "BERT_gru_caps": BERTGruCaps,
           "BERT_vad_nrc": BertVadNrc, "CNN": CNN, "LSTM": LSTM, "LR": ML, "NB": ML, "SVC": ML, "RF": ML}
 
@@ -25,8 +23,6 @@ parser.add_argument('--random_seed', type=int, default=42)
 parser.add_argument('--embed_type', type=str, default='w2v_wiki') # other options - 'glove' and 'w2v'
 parser.add_argument('--analyzer', type=str, default='word') # other options 'char'
 parser.add_argument('--ngram_range', type=tuple, default=(1, 2))
-# parser.add_argument('--mlm_weight', type=float, default=0.5)
-# parser.add_argument('--sparsemax', type=bool, default=False)
 
 
 BERT_MODEL = 'bert-base-uncased'

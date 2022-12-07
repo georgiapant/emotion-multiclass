@@ -15,7 +15,7 @@ def monitor_metrics(logits, labels_true):
     return accuracy, fscore_macro
 
 
-def evaluate(probs, y_true, use_preds=False):
+def evaluate(probs, y_true, labels, use_preds=False):
     if use_preds:
         y_pred = probs
     else:
@@ -28,4 +28,4 @@ def evaluate(probs, y_true, use_preds=False):
     accuracy = accuracy_score(y_true, y_pred)
     print(f'Accuracy: {accuracy * 100:.2f}%', flush=True)
     print(f'F1-score macro: {f1_score(y_true, y_pred, average="macro")}', flush=True)
-    print(f'Classification report: {classification_report(y_true, y_pred)}', flush=True)
+    print(f'Classification report: {classification_report(y_true, y_pred, target_names=labels)}', flush=True)

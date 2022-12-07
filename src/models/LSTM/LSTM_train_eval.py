@@ -68,6 +68,6 @@ class LSTM:
         train(self.X_train, self.y_train, self.X_val, self.y_val, model_name, self.es, self.patience, self.EPOCHS,
               self.BATCH_SIZE, EMBED_NUM_DIMS, self.MAX_LEN, self.num_labels, self.project_root_path)
 
-        predict(self.X_test, self.y_test, model_name, self.project_root_path, EMBED_NUM_DIMS)
+        predict(self.X_test, self.y_test, self.labels, model_name, self.project_root_path, EMBED_NUM_DIMS)
 
         print(f"Total training and prediction time: {format_time(time.time() - t0)}", flush=True)

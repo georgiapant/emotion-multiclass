@@ -106,10 +106,10 @@ class BertBilstm:
 
         print("Validation set", flush=True)
         probs_val = predict(self.X_val, self.MAX_LEN, self.BATCH_SIZE, self.device,
-                            model_path=self.project_root_path + '/models/', model_name=model_name + '.pt')
-        evaluate(probs_val, self.y_val)
+                            model_path=self.project_root_path + '/models/', model_name=model_name)
+        evaluate(probs_val, self.y_val, labels=self.labels)
 
         print("Test set", flush=True)
         probs_test = predict(self.X_test, self.MAX_LEN, self.BATCH_SIZE, self.device,
-                             model_path=self.project_root_path + '/models/', model_name=model_name + '.pt')
-        evaluate(probs_test, self.y_test)
+                             model_path=self.project_root_path + '/models/', model_name=model_name)
+        evaluate(probs_test, self.y_test, labels=self.labels)
