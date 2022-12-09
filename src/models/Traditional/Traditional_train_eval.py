@@ -46,7 +46,7 @@ class ML:
             model = None
 
         predictions = model.predict(X_test_vect)
-        evaluate(predictions, self.y_test, use_preds=True)
+        evaluate(predictions, self.y_test, use_preds=True, labels=self.labels)
 
         # Save model
         save_model = Pipeline([('tfidf', vect), ('clf', model)])

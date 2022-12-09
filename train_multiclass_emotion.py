@@ -13,7 +13,7 @@ MODELS = {"BERT": BertSimple, "BERT_bilstm": BertBilstm, "BERT_bilstm_simple": B
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=str, default='BERT')
-parser.add_argument('--dataset', type=str, default='ekman') #other options
+parser.add_argument('--dataset', type=str, default='ekman') #other options isear, merged
 parser.add_argument('--max_len', type=int, default=126)
 parser.add_argument('--batch_size', type=int, default=16)
 parser.add_argument('--epochs', type=int, default=10)
