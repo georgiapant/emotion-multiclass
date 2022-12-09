@@ -46,7 +46,7 @@ class CNN:
         self.num_labels = len(self.labels)
 
     def main(self, model_name):
-        if self.word_embd_type == 'w2v-wiki':
+        if self.word_embd_type == 'fasttext':
             EMBED_NUM_DIMS = 300
         else:
             EMBED_NUM_DIMS = 100
@@ -55,7 +55,7 @@ class CNN:
 
         # model = cnn()
         train(self.X_train, self.y_train, self.X_val, self.y_val, model_name, self.es, self.patience, self.EPOCHS,
-              self.BATCH_SIZE, EMBED_NUM_DIMS, self.MAX_LEN, self.num_labels, self.project_root_path)
+              self.BATCH_SIZE, self.word_embd_type, EMBED_NUM_DIMS, self.MAX_LEN, self.num_labels, self.project_root_path)
 
         predict(self.X_test, self.y_test, self.labels, model_name, self.project_root_path, self.MAX_LEN)
 

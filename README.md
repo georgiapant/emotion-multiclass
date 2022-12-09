@@ -64,7 +64,7 @@ There are several possible arguments to use when executing the script such as
 * _es_ (default: `val_loss`) - Metric to check before early stopping, options `f1` and `val_loss` which is the validation loss
 * _patience_ (default: `3`) - number of epochs to be patient for early stopping
 * _random_seed_ (default: `43`) - to be able to reproduce the results
-* _embed_type_ (default: `w2v_wiki`) - options `w2v_wiki`, `glove` and `w2v`
+* _embed_type_ (default: `fasttext`) - options `fasttext`, `glove` and `w2v`
 * _analyzer_ (default: `word`) - options same as the ones for the sklearn `Tfidfvectorizer`
 * _ngram_range_ (default: `(1,2)` - options same as the ones for the sklearn `Tfidfvectorizer`
 

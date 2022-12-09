@@ -221,7 +221,7 @@ def create_dataloaders_BERT(X, y, tokenizer, MAX_LEN, BATCH_SIZE, sampler='seque
     return dataloader
 
 
-def create_embedding_matrix(X_train, X_dev, model, embed_type='w2v_wiki', MAX_SEQ_LEN=100,
+def create_embedding_matrix(X_train, X_dev, model, embed_type='fasttext', MAX_SEQ_LEN=100,
                             EMBED_NUM_DIMS=300, project_root_path=None):
     texts_train = [''.join(text_preprocessing(text)) for text in X_train]
     texts_dev = [''.join(text_preprocessing(text)) for text in X_dev]
@@ -243,7 +243,7 @@ def create_embedding_matrix(X_train, X_dev, model, embed_type='w2v_wiki', MAX_SE
 
     # get embeddings from file
     try:
-        if embed_type == 'w2v_wiki':
+        if embed_type == 'fasttext':
             fpath = project_root_path + '/data/resources/wiki-news-300d-1M.vec'
 
             if not os.path.isfile(fpath):
