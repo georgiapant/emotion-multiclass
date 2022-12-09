@@ -20,7 +20,7 @@ parser.add_argument('--epochs', type=int, default=10)
 parser.add_argument('--es', type=str, default='val_loss')
 parser.add_argument('--patience', type=int, default=3)
 parser.add_argument('--random_seed', type=int, default=42)
-parser.add_argument('--embed_type', type=str, default='w2v_wiki') # other options - 'glove' and 'w2v'
+parser.add_argument('--embed_type', type=str, default='fasttext') # other options - 'glove' and 'w2v'
 parser.add_argument('--analyzer', type=str, default='word') # other options 'char'
 parser.add_argument('--ngram_range', type=tuple, default=(1, 2))
 

@@ -35,10 +35,10 @@ def predict(X_test, y_test, labels, model_name, project_root_path, MAX_LEN):
     evaluate(probabilities, y_test, labels=labels)
 
 
-def train(X_train, y_train, X_dev, y_dev, model_name, es, patience, EPOCHS, BATCH_SIZE, EMBED_NUM_DIMS, MAX_SEQ_LEN,
+def train(X_train, y_train, X_dev, y_dev, model_name, es, patience, EPOCHS, BATCH_SIZE, embed_type, EMBED_NUM_DIMS, MAX_SEQ_LEN,
           num_labels, project_root_path):
     X_train_pad, X_dev_pad, vocab_size, embedding_matrix = create_embedding_matrix(X_train, X_dev, model_name,
-                                                                                   embed_type='w2v_wiki',
+                                                                                   embed_type=embed_type,
                                                                                    MAX_SEQ_LEN=MAX_SEQ_LEN,
                                                                                    EMBED_NUM_DIMS=EMBED_NUM_DIMS,
                                                                                    project_root_path=project_root_path)
