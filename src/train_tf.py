@@ -30,8 +30,6 @@ def predict(X_test, y_test, labels, model_name, project_root_path, MAX_LEN):
     # prediction
     probabilities = model.predict(np.array(X_test_pad))
 
-    # predictions = np.argmax(probabilities, axis=1)
-    # evaluate(y_test, predictions)
     evaluate(probabilities, y_test, labels=labels)
 
 

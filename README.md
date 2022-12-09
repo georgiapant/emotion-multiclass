@@ -1,4 +1,4 @@
-# Multilable emotion classification
+# Multiclass emotion classification
 
 ### Datasets
 - ISEAR dataset which is published here and used in several other publications
