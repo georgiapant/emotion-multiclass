@@ -200,7 +200,7 @@ def predict(X_test, MAX_LEN, BATCH_SIZE, device, vad_nrc=False, model_path=None,
     # Put the model into the evaluation mode. The dropout layers are disabled during
     # the test time.
     t0 = time.time()
-    model = torch.jit.load(model_path+model_name + '.pt')
+    model = torch.jit.load(model_path+model_name + '.pt', map_location=torch.device(device))
     # model = torch.jit.load(project_root_path + '/models/model_scripted_BERT_simple.pt')
 
     model.eval()

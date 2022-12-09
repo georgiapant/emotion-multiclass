@@ -19,8 +19,8 @@ np.seterr(divide='ignore', invalid='ignore')
 class BertBilstm:
     def __init__(self, dataset, BATCH_SIZE, MAX_LEN, EPOCHS, patience, BERT_MODEL, RANDOM_SEED, project_root_path,
                  es, embed_type, ngram_type, ngram_range):
-        self.device = torch.device('cuda')
-        print('GPU:', torch.cuda.get_device_name(0))
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        print("Using {} for inference".format(self.device))
 
         self.loss_fn = nn.CrossEntropyLoss()
         self.tokenizer = BertTokenizer.from_pretrained(BERT_MODEL, do_lower_case=True)
