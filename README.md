@@ -51,7 +51,7 @@ pip install -r requirements.txt
 Then run the following command:
 
 ```python
-python -m emotion_main
+python -m train_multiclass_emotion
 ```
 
 There are several possible arguments to use when executing the script such as 
@@ -72,5 +72,9 @@ For example, to execute the experiment with the BERT vad nrc model with the weig
 the below command needs to be executed
 
 ```python
-python -m emotion_main --model BERT_vad_nrc --epochs 100 --petience 5 --es f1
+python -m train_multiclass_emotion --model BERT_vad_nrc --epochs 100 --petience 5 --es f1
 ```
+
+### Contact for further details
+
+- Georgia Pantalona (georgia.pant@gmail.com)
