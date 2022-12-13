@@ -50,7 +50,7 @@ pip install -r requirements.txt
 ```
 Then run the following command:
 
-```python
+```bash
 python -m train_multiclass_emotion
 ```
 
@@ -71,7 +71,7 @@ There are several possible arguments to use when executing the script such as
 For example, to execute the experiment with the BERT vad nrc model with the weighted loss and the chained scheduler 
 the below command needs to be executed
 
-```python
+```bash
 python -m train_multiclass_emotion --model BERT_vad_nrc --epochs 100 --petience 5 --es f1
 ```
 
